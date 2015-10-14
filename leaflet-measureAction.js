@@ -1,4 +1,72 @@
-
+L.Text = L.Class.extend({
+    includes: L.Mixin.Events,
+    options: {
+        autoPan: true,
+        offset: new L.Point(0, 30),
+        autoPanPadding: new L.Point(5, 5),
+        latlng: null,
+        content: "",
+        className: ""
+    },
+    initialize: function(options) {
+        L.Util.setOptions(this, options);
+    },
+    onAdd: function(map) {
+        this._map = map;
+        this._container || this._initLayout();
+        map._panes.popupPane.appendChild(this._container);
+        map.on("viewreset", this._updatePosition, this);
+        if (L.Browser.any3d) map.on("zoomanim", this._zoomAnimation, this);
+        this._update();
+    },
+    addTo: function(map) {
+        map.addLayer(this);
+        return this;
+    },
+    onRemove: function(map) {
+        map._panes.popupPane.removeChild(this._container);
+        map.off({
+            viewreset: this._updatePosition,
+            zoomanim: this._zoomAnimation
+        },
+		this);
+        this._map = null;
+    },
+    setLatLng: function(latlng) {
+        this.options.latlng = L.latLng(latlng);
+        this._updatePosition();
+        return this;
+    },
+    setContent: function(content) {
+        this.options.content = content;
+        this._updateContent();
+        return this;
+    },
+    _initLayout: function() {
+        this._container = L.DomUtil.create("lable", "imap-text " + this.options.className + " imap-zoom-animated");
+        this._contentNode = L.DomUtil.create("span", "imap-text-content", this._container);
+    },
+    _update: function() {
+        this._map && (this._updateContent(), this._updatePosition());
+    },
+    _updateContent: function() {
+        if (this.options.content) typeof this.options.content == "string" ? this._contentNode.innerHTML = this.options.content : (this._contentNode.innerHTML = "", this._contentNode.appendChild(this.options.content));
+    },
+    _updatePosition: function() {
+        var point = this._map.latLngToLayerPoint(this.options.latlng),
+         is3D = L.Browser.any3d,
+         offset = this.options.offset;
+        is3D && L.DomUtil.setPosition(this._container, point);
+        this._containerBottom = -offset.y - (is3D ? 0 : point.y);
+        this._containerLeft = offset.x + (is3D ? 0 : point.x);
+        this._container.style.bottom = this._containerBottom + "px";
+        this._container.style.left = this._containerLeft + "px";
+    },
+    _zoomAnimation: function(a) {
+        a = this._map._latLngToNewLayerPoint(this.options.latlng, a.zoom, a.center);
+        L.DomUtil.setPosition(this._container, a);
+    }
+});
 L.ComputeDist = L.ToolbarAction.extend({
 	options: {
 		toolbarIcon: { className: 'leaflet-ComputeDist' }
