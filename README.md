@@ -1,7 +1,6 @@
 # Leaflet-MeasureAction
 based on ToolbarAction
-
-![image](https://github.com/shitao1988/Leaflet-MeasureAction/raw/master/1.png)
+Add actions to toolbar
 
          var measureline = L.ComputeDist.extend({
                 options: {
@@ -23,3 +22,5 @@ based on ToolbarAction
                 position: 'topleft',
                 actions: [measureline, measurearea],
             }).addTo(map);
+            
+![image](https://github.com/shitao1988/Leaflet-MeasureAction/raw/master/1.png)
