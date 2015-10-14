@@ -1,7 +1,7 @@
 # Leaflet-MeasureAction
 based on ToolbarAction
 
-![image](https://github.com/shitao1988/Leaflet-MeasureAction/1.png)
+![image](https://github.com/shitao1988/Leaflet-MeasureAction/raw/master/1.png)
 
          var measureline = L.ComputeDist.extend({
                 options: {
