@@ -1,0 +1,26 @@
+.imap-control-computeArea.active {
+    background-position: -438px -36px;
+}
+.imap-text {
+    background-color: white;
+    border: 1px solid red;
+    padding: 2px;
+    position: absolute;
+    white-space: nowrap;
+}
+.imap-text.imap-polygon-text {
+    border: 0 none;
+}
+.md-icon {
+    background: transparent url("default/images/onlineMap/control.png") no-repeat scroll -546px -78px;
+}
+.md-remove-icon {
+    background: transparent url("default/images/onlineMap/control.png") no-repeat scroll -534px -78px;
+}
+.dist-start, .dist-point {
+    border-color: #888888;
+    color: #7a7a7a;
+    font-size: 12px;
+    margin-bottom: 5px;
+    padding: 0 2px;
+}

@@ -28,8 +28,7 @@ L.Text = L.Class.extend({
         map.off({
             viewreset: this._updatePosition,
             zoomanim: this._zoomAnimation
-        },
-		this);
+        }, this);
         this._map = null;
     },
     setLatLng: function(latlng) {
@@ -54,8 +53,8 @@ L.Text = L.Class.extend({
     },
     _updatePosition: function() {
         var point = this._map.latLngToLayerPoint(this.options.latlng),
-         is3D = L.Browser.any3d,
-         offset = this.options.offset;
+            is3D = L.Browser.any3d,
+            offset = this.options.offset;
         is3D && L.DomUtil.setPosition(this._container, point);
         this._containerBottom = -offset.y - (is3D ? 0 : point.y);
         this._containerLeft = offset.x + (is3D ? 0 : point.x);
@@ -68,22 +67,22 @@ L.Text = L.Class.extend({
     }
 });
 L.ComputeDist = L.ToolbarAction.extend({
-	options: {
-		toolbarIcon: { className: 'leaflet-ComputeDist' }
-	},
+    options: {
+        toolbarIcon: {
+            className: 'leaflet-ComputeDist'
+        }
+    },
     _rad: Math.PI / 180,
-	initialize: function(map, options) {
-        this._map=map;
-         this._map._distControl = this;
-		L.setOptions(this, options);
-		L.ToolbarAction.prototype.initialize.call(this, map, options);
-	},
-
-	addHooks: function() {
-		this._onMouseClick();
-	},
-
-	  _onMouseClick: function() {
+    initialize: function(map, options) {
+        this._map = map;
+        this._map._distControl = this;
+        L.setOptions(this, options);
+        L.ToolbarAction.prototype.initialize.call(this, map, options);
+    },
+    addHooks: function() {
+        this._onMouseClick();
+    },
+    _onMouseClick: function() {
         this._map._areaControl._startCompute && this._map._areaControl._finishCompute();
         this._startCompute ? this._finishCompute() : this._enableCompute();
     },
@@ -99,22 +98,22 @@ L.ComputeDist = L.ToolbarAction.extend({
                 this._addLable(latlng, this._getDistanceString(this._totalDist), "dist-point");
             }
         } else this._currentDist = {
-            _layers: [],
-            _latlngs: []
-        },
-		this._addPath(latlng),
-		this._totalDist = 0,
-		this._startPath = true,
-		this._addMarker(latlng),
-		this._addLable(latlng, "\u8d77\u70b9", "dist-start"),
-		this._currentDist._latlngs.push(latlng);
+                _layers: [],
+                _latlngs: []
+            },
+            this._addPath(latlng),
+            this._totalDist = 0,
+            this._startPath = true,
+            this._addMarker(latlng),
+            this._addLable(latlng, "\u8d77\u70b9", "dist-start"),
+            this._currentDist._latlngs.push(latlng);
         this._lastPoint = latlng;
         this._startMove = false;
     },
     _onMove: function(event) {
         var latlng = event.latlng,
-		point= event.containerPoint,
-         tip = this._map._cursorTip;
+            point = event.containerPoint,
+            tip = this._map._cursorTip;
         tip.style.left = point.x + 7 + "px";
         tip.style.top = point.y + 23 + "px";
         tip.style.display = "";
@@ -128,7 +127,7 @@ L.ComputeDist = L.ToolbarAction.extend({
         var map = this._map;
         map.contextMenu && map.contextMenu.disable();
         this._startCompute = true;
-       // L.DomUtil.addClass(this._container, "active");
+        // L.DomUtil.addClass(this._container, "active");
         map.on("click", this._setPath, this);
         map.on("dblclick contextmenu", this._finishCompute, this);
         map.doubleClickZoom.disable();
@@ -152,15 +151,15 @@ L.ComputeDist = L.ToolbarAction.extend({
     },
     _addMarker: function(latLng) {
         var icon = new L.Icon({
-            iconUrl: "../../styles/default/images/onlineMap/transparent.png",
-            iconSize: [11, 11],
-            iconAnchor: [6, 6],
-            className: "md-icon"
-        }),
-         marker = new L.Marker(latLng, {
-             icon: icon,
-             clickable: false
-         });;
+                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconSize: [11, 11],
+                iconAnchor: [6, 6],
+                className: "md-icon"
+            }),
+            marker = new L.Marker(latLng, {
+                icon: icon,
+                clickable: false
+            });;
         this._map.addLayer(marker);
         this._currentDist._layers.push(marker);
     },
@@ -183,21 +182,21 @@ L.ComputeDist = L.ToolbarAction.extend({
     },
     _addReomveMarker: function(latlng) {
         var icon = new L.Icon({
-            iconUrl: "../../styles/default/images/onlineMap/transparent.png",
-            iconSize: [12, 12],
-            iconAnchor: [ - 10, 7],
-            className: "md-remove-icon"
-        }),
-        marker = new L.Marker(latlng, {
-            icon: icon
-        });
+                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconSize: [12, 12],
+                iconAnchor: [-10, 7],
+                className: "md-remove-icon"
+            }),
+            marker = new L.Marker(latlng, {
+                icon: icon
+            });
         marker.on("click", this._clearLayers, this._currentDist);
         this._map.addLayer(marker);
         this._currentDist._layers.push(marker);
     },
     _clearLayers: function() {
         var i, layers = this._layers,
-		length;
+            length;
         i = 0;
         for (length = layers.length; i < length; i++) this._map.removeLayer(layers[i]);
     },
@@ -206,32 +205,30 @@ L.ComputeDist = L.ToolbarAction.extend({
     },
     _getDistance: function(a, b) {
         var c = this._rad,
-		d = c * a.lat,
-		e = c * b.lat,
-		c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((d - e) / 2), 2) + Math.cos(d) * Math.cos(e) * Math.pow(Math.sin((c * a.lng - c * b.lng) / 2), 2)));
+            d = c * a.lat,
+            e = c * b.lat,
+            c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((d - e) / 2), 2) + Math.cos(d) * Math.cos(e) * Math.pow(Math.sin((c * a.lng - c * b.lng) / 2), 2)));
         return c = Math.round(c * 6378137);
     }
 });
-
-
 L.ComputeArea = L.ToolbarAction.extend({
-	options: {
-		toolbarIcon: { className: 'leaflet-ComputeDist' }
-	},
-     _rad: Math.PI / 180,
+    options: {
+        toolbarIcon: {
+            className: 'leaflet-ComputeDist'
+        }
+    },
+    _rad: Math.PI / 180,
     _deg: 180 / Math.PI,
-	initialize: function(map, options) {
-        this._map=map;
-         this._map._areaControl = this;
-		L.setOptions(this, options);
-		L.ToolbarAction.prototype.initialize.call(this, map, options);
-	},
-
-	addHooks: function() {
-		this._onMouseClick();
-	},
-
-	 _onMouseClick: function() {
+    initialize: function(map, options) {
+        this._map = map;
+        this._map._areaControl = this;
+        L.setOptions(this, options);
+        L.ToolbarAction.prototype.initialize.call(this, map, options);
+    },
+    addHooks: function() {
+        this._onMouseClick();
+    },
+    _onMouseClick: function() {
         this._map._distControl._startCompute && this._map._distControl._finishCompute();
         this._startCompute ? this._finishCompute() : this._enableCompute();
     },
@@ -240,15 +237,14 @@ L.ComputeArea = L.ToolbarAction.extend({
         this._startArea ? latlng.equals(this._lastPoint) || (this._addMarker(latlng), this._compute._latlngs.push(latlng)) : (this._compute = {
             _layers: [],
             _latlngs: []
-        },
-		this._addArea(latlng), this._map.on("mousemove", this._onMove, this), this._startArea = true, this._addMarker(latlng), this._compute._latlngs.push(latlng));
+        }, this._addArea(latlng), this._map.on("mousemove", this._onMove, this), this._startArea = true, this._addMarker(latlng), this._compute._latlngs.push(latlng));
         this._lastPoint = latlng;
         this._startMove = false;
     },
     _onMove: function(event) {
         var latlng = event.latlng,
-		point = event.containerPoint,
-		tip = this._map._cursorTip;
+            point = event.containerPoint,
+            tip = this._map._cursorTip;
         tip.style.left = point.x + 7 + "px";
         tip.style.top = point.y + 23 + "px";
         tip.style.display = "";
@@ -262,7 +258,7 @@ L.ComputeArea = L.ToolbarAction.extend({
         var map = this._map;
         map.contextMenu && map.contextMenu.disable();
         this._startCompute = true;
-       // L.DomUtil.addClass(this._container, "active");
+        // L.DomUtil.addClass(this._container, "active");
         map.on("click", this._setArea, this);
         map.on("dblclick contextmenu", this._finishCompute, this);
         map.doubleClickZoom.disable();
@@ -284,21 +280,21 @@ L.ComputeArea = L.ToolbarAction.extend({
         map.doubleClickZoom.enable();
         this._startCompute = this._startMove = this._startArea = false;
     },
-    _addMarker: function (latlng) {
+    _addMarker: function(latlng) {
         var iocn = new L.Icon({
-            iconUrl: "../../styles/default/images/onlineMap/transparent.png",
-            iconSize: [11, 11],
-            iconAnchor: [6, 6],
-            className: "md-icon"
-        }),
-		marker = new L.Marker(latlng, {
-		    icon: iocn,
-		    clickable: false
-		});
+                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconSize: [11, 11],
+                iconAnchor: [6, 6],
+                className: "md-icon"
+            }),
+            marker = new L.Marker(latlng, {
+                icon: iocn,
+                clickable: false
+            });
         this._map.addLayer(marker);
         this._compute._layers.push(marker);
     },
-    _addArea: function (latlng) {
+    _addArea: function(latlng) {
         var area = this._area = new L.Polygon([latlng], {
             weight: 2,
             clickable: false
@@ -307,48 +303,48 @@ L.ComputeArea = L.ToolbarAction.extend({
         this._compute._layers.push(area);
         this._compute._map = this._map;
     },
-    _addLable: function (latlng, content, className) {
-       var label = this._compute.lastLable = new L.Text({
+    _addLable: function(latlng, content, className) {
+        var label = this._compute.lastLable = new L.Text({
             latlng: latlng,
             content: content,
             className: className
         });
-       this._map.addLayer(label);
-       this._compute._layers.push(label);
+        this._map.addLayer(label);
+        this._compute._layers.push(label);
     },
-    _addReomveMarker: function (latlng) {
+    _addReomveMarker: function(latlng) {
         var icon = new L.Icon({
-            iconUrl: "../../styles/default/images/onlineMap/transparent.png",
-            iconSize: [12, 12],
-            iconAnchor: [ - 10, 7],
-            className: "md-remove-icon"
-        }),
-		marker = new L.Marker(latlng, {
-		    icon: icon
-		});
+                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconSize: [12, 12],
+                iconAnchor: [-10, 7],
+                className: "md-remove-icon"
+            }),
+            marker = new L.Marker(latlng, {
+                icon: icon
+            });
         marker.on("click", this._clearLayers, this._compute);
         this._map.addLayer(marker);
         this._compute._layers.push(marker);
     },
     _clearLayers: function() {
-        var a, b = this._layers,
-		c;
-        a = 0;
-        for (c = b.length; a < c; a++) this._map.removeLayer(b[a])
+        var layers=this._layers;
+        for (var i = 0; i < layers.length; i++) {
+            this._map.removeLayer(layers[i]);
+        }
     },
     _getAreaString: function(a) {
         a = Math.round(this._computeArea(a));
-        return a < 1E6 ? a + "\u5e73\u65b9\u7c73": (a / 1E6).toFixed(2) + "\u5e73\u65b9\u516c\u91cc"
+        return a < 1E6 ? a + "\u5e73\u65b9\u7c73" : (a / 1E6).toFixed(2) + "\u5e73\u65b9\u516c\u91cc"
     },
     _computeArea: function(a) {
         var b = 0,
-		c, d, e, f = a.length;
+            c, d, e, f = a.length;
         for (c = 0; c < f; ++c) d = (c + 1) % f,
-		e = (c + 2) % f,
-		b += this._angle(a[c], a[d], a[e]);
+            e = (c + 2) % f,
+            b += this._angle(a[c], a[d], a[e]);
         a = (f - 2) * 180;
         c = b - a;
-        c > 420 ? c = f * 360 - b - a: c > 300 && c < 420 && (c = Math.abs(360 - c));
+        c > 420 ? c = f * 360 - b - a : c > 300 && c < 420 && (c = Math.abs(360 - c));
         return c * this._rad * 40680631590769;
     },
     _angle: function(a, b, c) {
@@ -359,12 +355,12 @@ L.ComputeArea = L.ToolbarAction.extend({
         return b;
     },
     _bearing: function(a, b) {
-        var c = this._rad,
-		d = a.lat * c,
-		e = a.lng * c,
-		f = b.lat * c;
-        c *= b.lng;
-        d = -Math.atan2(Math.sin(e - c) * Math.cos(f), Math.cos(d) * Math.sin(f) - Math.sin(d) * Math.cos(f) * Math.cos(e - c));
+        var degToRad  = this._rad,
+            phi1 = a.lat * degToRad ,
+            lam1 = a.lng * degToRad ,
+            phi2 = b.lat * degToRad ,
+            lam2 = b.lng* degToRad;
+        d = -Math.atan2(Math.sin(lam1 - lam2) * Math.cos(phi2), Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(lam1 - lam2));
         d < 0 && (d += Math.PI * 2);
         d *= this._deg;
         return d;
