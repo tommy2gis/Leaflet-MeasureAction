@@ -360,9 +360,9 @@ L.ComputeArea = L.ToolbarAction.extend({
             lam1 = a.lng * degToRad ,
             phi2 = b.lat * degToRad ,
             lam2 = b.lng* degToRad;
-        d = -Math.atan2(Math.sin(lam1 - lam2) * Math.cos(phi2), Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(lam1 - lam2));
-        d < 0 && (d += Math.PI * 2);
-        d *= this._deg;
-        return d;
+        angle = -Math.atan2(Math.sin(lam1 - lam2) * Math.cos(phi2), Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(lam1 - lam2));
+        angle < 0 && (angle += Math.PI * 2);
+        angle *= this._deg;
+        return angle;
     }
 });
