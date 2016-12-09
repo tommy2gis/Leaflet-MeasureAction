@@ -151,7 +151,7 @@ L.ComputeDist = L.ToolbarAction.extend({
     },
     _addMarker: function(latLng) {
         var icon = new L.Icon({
-                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconUrl: "transparent.png",
                 iconSize: [11, 11],
                 iconAnchor: [6, 6],
                 className: "md-icon"
@@ -182,7 +182,7 @@ L.ComputeDist = L.ToolbarAction.extend({
     },
     _addReomveMarker: function(latlng) {
         var icon = new L.Icon({
-                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconUrl: "transparent.png",
                 iconSize: [12, 12],
                 iconAnchor: [-10, 7],
                 className: "md-remove-icon"
@@ -282,7 +282,7 @@ L.ComputeArea = L.ToolbarAction.extend({
     },
     _addMarker: function(latlng) {
         var iocn = new L.Icon({
-                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconUrl: "transparent.png",
                 iconSize: [11, 11],
                 iconAnchor: [6, 6],
                 className: "md-icon"
@@ -314,7 +314,7 @@ L.ComputeArea = L.ToolbarAction.extend({
     },
     _addReomveMarker: function(latlng) {
         var icon = new L.Icon({
-                iconUrl: "../../styles/default/images/onlineMap/transparent.png",
+                iconUrl: "transparent.png",
                 iconSize: [12, 12],
                 iconAnchor: [-10, 7],
                 className: "md-remove-icon"

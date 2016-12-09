@@ -12,10 +12,10 @@
     border: 0 none;
 }
 .md-icon {
-    background: transparent url("default/images/onlineMap/control.png") no-repeat scroll -546px -78px;
+    background: transparent url("control.png") no-repeat scroll -546px -78px;
 }
 .md-remove-icon {
-    background: transparent url("default/images/onlineMap/control.png") no-repeat scroll -534px -78px;
+    background: transparent url("control.png") no-repeat scroll -534px -78px;
 }
 .dist-start, .dist-point {
     border-color: #888888;
